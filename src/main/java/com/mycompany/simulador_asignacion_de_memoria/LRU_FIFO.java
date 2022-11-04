@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
+//:)
 class Cache {
 
     int key;
