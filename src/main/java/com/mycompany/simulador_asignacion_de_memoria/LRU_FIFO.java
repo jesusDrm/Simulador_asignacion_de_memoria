@@ -273,21 +273,9 @@ public class LRU_FIFO extends javax.swing.JFrame {
             jTable2.setValueAt(null, i, 1);
         }
         for(int i=0;i<q.size();i++){
-           // System.out.println("Key "+keys2[i]);
         tabla2.setValueAt(keys2[i],i,0);
-       
-        //Valores[i]=cache.obtenerElementodeCache((int)keys2[i]);
-         //System.out.println(q.size());
-         tabla2.setValueAt(cache.obtenerElementodeCache((int)keys3[i]),i,1);
+         tabla2.setValueAt(cache.obtenerElementodeCache((int)keys2[i]),i,1);
         
-        }
-        
-        for(int i=0;i<ValCache();i++){
-           // tabla2.setValueAt(cache.obtenerElementodeCache((int)keys2[j]),i,1);
-           //System.out.println(Valores[i]);
-            
-           // System.out.println("Key "+keys2[i]);
-        //tabla2.setValueAt(Valores[i],i,1);
         }
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
