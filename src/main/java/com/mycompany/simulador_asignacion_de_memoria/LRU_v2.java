@@ -28,7 +28,7 @@ class Cache {
  *
  * @author cruz_
  */
-public class LRU_FIFO extends javax.swing.JFrame {
+public class LRU_QUEUE extends javax.swing.JFrame {
 
     public int ValCache() {
         return Integer.parseInt(String.valueOf(jSpinner1.getValue()));
@@ -67,7 +67,7 @@ public class LRU_FIFO extends javax.swing.JFrame {
     /**
      * Creates new form LRU_FIFO
      */
-    public LRU_FIFO() {
+    public LRU_QUEUE() {
         initComponents();
     }
 
@@ -126,6 +126,11 @@ public class LRU_FIFO extends javax.swing.JFrame {
         jLabel3.setText("Fallos");
 
         jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Rendimiento");
 
@@ -256,7 +261,7 @@ public class LRU_FIFO extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
     private void insertartabla(JTable tabla1, JTable tabla2) {
         
-        LRU_FIFO cache = new LRU_FIFO();
+        LRU_QUEUE cache = new LRU_QUEUE();
         String[]Valores =new String[ValCache()];
         
         int key;
@@ -267,7 +272,7 @@ public class LRU_FIFO extends javax.swing.JFrame {
         cache.colocarElementoCache(key, Values ,ValCache());
         //q.toArray();
         Object[]keys2 =q.toArray();
-         Object[]keys3 =q.toArray();
+         //Object[]keys3 =q.toArray();
          for (int i = 0; i < jTable2.getRowCount(); i++) {
             jTable2.setValueAt(null, i, 0);
             jTable2.setValueAt(null, i, 1);
@@ -289,10 +294,14 @@ public class LRU_FIFO extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         System.out.println("ValCacheBr: "+ValCache());
         insertartabla(jTable1, jTable2);
-       q.forEach(System.out::println);
+      // q.forEach(System.out::println);
        
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,7 +310,7 @@ public class LRU_FIFO extends javax.swing.JFrame {
 
         //int valorSpinner = Integer.parseInt(jSpinner1.getValue().toString());
         // System.out.println(valorSpinner);
-        LRU_FIFO cache = new LRU_FIFO();
+        LRU_QUEUE cache = new LRU_QUEUE();
         System.out.println(cache.jSpinner1.getValue());
         //cache.colocarElementoCache(1, "Valor_1");
         //System.out.println(q);
@@ -338,20 +347,21 @@ public class LRU_FIFO extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LRU_FIFO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LRU_QUEUE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LRU_FIFO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LRU_QUEUE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LRU_FIFO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LRU_QUEUE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LRU_FIFO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LRU_QUEUE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LRU_FIFO().setVisible(true);
+                new LRU_QUEUE().setVisible(true);
             }
         });
     }
