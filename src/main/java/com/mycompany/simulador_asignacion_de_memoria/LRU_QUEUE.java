@@ -4,20 +4,24 @@
  */
 package com.mycompany.simulador_asignacion_de_memoria;
 
+import java.util.Collection;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 //:)
+
 class Cache {
 
     int key;
     String value;
-
+    
     Cache(int key, String value) {
         this.key = key;
         this.value = value;
@@ -29,38 +33,54 @@ class Cache {
  * @author cruz_
  */
 public class LRU_QUEUE extends javax.swing.JFrame {
-
+    int fallos=0;
+    int conteo=0;
+    String[] Valores = new String[100];
+    
     public int ValCache() {
         return Integer.parseInt(String.valueOf(jSpinner1.getValue()));
     }
     static Deque<Integer> q = new LinkedList<>();
+    
     static Map<Integer, Cache> map = new HashMap<>();
- 
+    static Map<Integer,String> lru = new HashMap<>(); 
+    
+    public boolean fails(String Values, HashMap k){
+        return k.containsValue(Values);
+    }
     public String obtenerElementodeCache(int key) {
         if (map.containsKey(key)) {
             Cache actual = map.get(key);
+           
             //q.remove(actual.key);
             //q.addFirst(actual.key);
             return actual.value;
         }
         return "No exite";
     }
-   
     public void colocarElementoCache(int key, String valor,int CA) {
-       
+  
         if (map.containsKey(key)) {
             Cache actu = map.get(key);
-            q.remove(actu.key);
-        } else {
+            q.remove(actu.key);    
+            
+        }
+        
+        else {
+            
             if (q.size() == CA) {
-                
+            
                 int temp = q.removeLast();
                 map.remove(temp);
+               // fallos++;
+                
             }
 
             Cache nuevoOb = new Cache(key, valor);
-            q.addFirst(nuevoOb.key);
+            q.addFirst(nuevoOb.key); 
             map.put(key, nuevoOb);
+            lru.put(key,valor);
+           //fallos++;
         }
     }
 
@@ -254,6 +274,11 @@ public class LRU_QUEUE extends javax.swing.JFrame {
             jTable1.setValueAt(null, i, 0);
             jTable1.setValueAt(null, i, 1);
         }
+        for (int i = 0; i < jTable2.getRowCount(); i++) {
+            jTable2.setValueAt(null, i, 0);
+            jTable2.setValueAt(null, i, 1);
+        }
+         
           Deque<Integer> q = new LinkedList<>();
           Map<Integer, Cache> map = new HashMap<>();
         jButton1.setEnabled(true);
@@ -262,8 +287,8 @@ public class LRU_QUEUE extends javax.swing.JFrame {
     private void insertartabla(JTable tabla1, JTable tabla2) {
         
         LRU_QUEUE cache = new LRU_QUEUE();
-        String[]Valores =new String[ValCache()];
-        
+        //LinkedList<String> Valores = new LinkedList<>();
+        //String [] Valores;
         int key;
         String Values;
         Values =(String)tabla1.getValueAt(0, 1);
@@ -272,16 +297,22 @@ public class LRU_QUEUE extends javax.swing.JFrame {
         cache.colocarElementoCache(key, Values ,ValCache());
         //q.toArray();
         Object[]keys2 =q.toArray();
-         //Object[]keys3 =q.toArray();
-         for (int i = 0; i < jTable2.getRowCount(); i++) {
-            jTable2.setValueAt(null, i, 0);
+        //Object[]Valores =q.toArray();
+         for (int i = 0; i < jTable2.getRowCount(); i++) { 
+             jTable2.setValueAt(null, i, 0);
             jTable2.setValueAt(null, i, 1);
         }
+                   
         for(int i=0;i<q.size();i++){
-        tabla2.setValueAt(keys2[i],i,0);
-         tabla2.setValueAt(cache.obtenerElementodeCache((int)keys2[i]),i,1);
+            //Valores[i]=cache.obtenerElementodeCache((int)keys2[i]);
+            tabla2.setValueAt(keys2[i],i,0); 
+            tabla2.setValueAt(cache.obtenerElementodeCache((int)keys2[i]),i,1);
+           System.out.println(lru.containsValue(cache.obtenerElementodeCache((int)keys2[i])));
+            }
+      System.out.println(lru);
+       
+        //System.out.println(cache.fails(cache.obtenerElementodeCache((int)keys2[i]), (HashMap) lru));
         
-        }
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         //jButton1.setEnabled(false);
@@ -292,8 +323,14 @@ public class LRU_QUEUE extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
         System.out.println("ValCacheBr: "+ValCache());
+        
         insertartabla(jTable1, jTable2);
+                 for (int i = 0; i < jTable1.getRowCount(); i++) {
+            jTable1.setValueAt(null, i, 0);
+            jTable1.setValueAt(null, i, 1);
+        }   
       // q.forEach(System.out::println);
        
         
@@ -307,11 +344,12 @@ public class LRU_QUEUE extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
+            
         //int valorSpinner = Integer.parseInt(jSpinner1.getValue().toString());
         // System.out.println(valorSpinner);
         LRU_QUEUE cache = new LRU_QUEUE();
         System.out.println(cache.jSpinner1.getValue());
+        System.out.println("fallos: "+cache.fallos);
         //cache.colocarElementoCache(1, "Valor_1");
         //System.out.println(q);
 
@@ -387,4 +425,6 @@ public class LRU_QUEUE extends javax.swing.JFrame {
     private Object getEnt() {
      return q.getLast();
     }
+
+    
 }

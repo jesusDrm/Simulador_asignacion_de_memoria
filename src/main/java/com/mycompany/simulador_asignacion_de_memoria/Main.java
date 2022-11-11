@@ -4,8 +4,10 @@ import javax.swing.*;
 public class Main {
   
     public static void main(String[] args) {
-      ParticionFija PF = new ParticionFija();
-      PF.setVisible(true);
+       Menu v = new   Menu ();
+       v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       v.setExtendedState(JFrame.MAXIMIZED_BOTH);
+       v.show();
     }
    
 }
